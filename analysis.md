@@ -1,65 +1,25 @@
+# Wallet Score Analysis
 
----
+This analysis summarises the credit scores generated for wallets based on their Aave V2 transaction data.
 
-## 📊 **2. `analysis.md` Template**
+## 📊 Score Distribution
 
-```markdown
-# 📈 **Analysis Report: Wallet Credit Scoring**
+Below is the distribution of wallet scores grouped into 100-point buckets.
 
-## ✅ **1. Score Distribution**
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
 
-Below is the **histogram of credit scores** across ranges:
+df = pd.read_csv('wallet_scores.csv')
 
-| **Score Range** | **Number of Wallets** |
-|---|---|
-| 0-100 | xxx |
-| 100-200 | xxx |
-| 200-300 | xxx |
-| ... | ... |
-| 900-1000 | xxx |
+# Bin scores into ranges
+bins = list(range(0, 1100, 100))
+df['score_range'] = pd.cut(df['score'], bins)
 
-> **Insert plot here:**  
-> *(Attach matplotlib/seaborn bar plot showing counts per 100-score range bucket)*
-
----
-
-## 🔍 **2. Behavioural Analysis**
-
-### 🟥 **Low Score Wallets (0-200)**
-
-- Characteristics:
-  - Low or irregular deposits.
-  - High borrow to repay ratio.
-  - Frequent liquidations (if any).
-  - Possible bot-like micro transactions.
-
----
-
-### 🟩 **High Score Wallets (800-1000)**
-
-- Characteristics:
-  - Consistent deposits of significant value.
-  - Responsible borrowing with timely repayments.
-  - Zero or minimal liquidation history.
-  - Stable, human-like transaction patterns.
-
----
-
-## 📌 **3. Insights**
-
-- **Most wallets cluster in [score range]** indicating general behaviour patterns.
-- **Outliers detected** in low ranges, likely representing bots or exploit exploiters.
-
----
-
-## 📂 **Next Steps**
-
-- Integrate external risk data (oracle feeds, liquidation events) for improved scoring.
-- Experiment with unsupervised clustering for risk segment detection.
-
----
-
-## 👤 **Author**
-
-Prashant Sharma  
-[LinkedIn](#) | [GitHub](#)
+# Plot
+score_counts = df['score_range'].value_counts().sort_index()
+score_counts.plot(kind='bar', figsize=(10,6))
+plt.title('Wallet Credit Score Distribution')
+plt.xlabel('Score Range')
+plt.ylabel('Number of Wallets')
+plt.show()

@@ -1,37 +1,30 @@
-# DeFi Wallet Credit Scoring
+# DeFi Credit Scoring Model
 
-## 📌 **Problem Statement**
+This project develops a robust machine learning pipeline to assign credit scores (0-1000) to wallets interacting with Aave V2 based on their historical transaction behavior.
 
-This project builds a **machine learning-based credit scoring system** to assign scores between **0 and 1000** for wallets interacting with the Aave V2 protocol. Higher scores indicate reliable and responsible behaviour, while lower scores indicate risky, exploitative, or bot-like activity.
+## 📊 Problem
 
----
+Assess DeFi user risk profiles from transaction-level data to enable credit risk assessment for decentralized lending protocols.
 
-## 🛠 **Methodology**
+## 💡 Approach
 
-1. **Input:** Raw transaction-level data from Aave V2 containing actions:
-   - `deposit`, `borrow`, `repay`, `redeemunderlying`, `liquidationcall`.
+1. **Feature Engineering:** Aggregated user transaction features such as total deposits, redeems, transaction count, unique assets, etc.
+2. **Scoring Model:** Normalization-based scoring across engineered features to yield a final wallet score (0-1000).
 
-2. **Feature Engineering:**
-   - **Number of deposits**
-   - **Total deposited amount**
-   - **Average deposit size**
-   - **Number of borrows**
-   - **Total borrowed amount**
-   - **Repayment ratio (total repaid / total borrowed)**
-   - **Number of liquidations**
+## ⚙️ Project Structure
 
-3. **Scoring Logic:**
-   - Each wallet's engineered features are aggregated.
-   - Scores are normalised between **0 and 1000** using min-max scaling.
-   - Weighted scoring is applied based on feature importance to determine final credit scores.
+- `score_wallets.py`: Main entry script to generate scores.
+- `src/feature_engineering.py`: Feature engineering logic.
+- `src/scoring.py`: Scoring logic.
+- `data/`: Sample input data.
+- `notebooks/`: Exploratory Data Analysis.
 
----
+## 🛠️ Requirements
 
-## ⚙️ **Architecture & Processing Flow**
+- Python 3.8+
+- pandas
+- scikit-learn
+- matplotlib
 
-```mermaid
-graph TD;
-    A[Raw JSON file] --> B[Load DataFrame];
-    B --> C[Feature Engineering];
-    C --> D[Score Calculation];
-    D --> E[Output CSV with wallet credit scores];
+Install dependencies:
+
