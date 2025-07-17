@@ -1,25 +1,55 @@
-# Wallet Score Analysis
+# 📝 Wallet Scoring Analysis
 
-This analysis summarises the credit scores generated for wallets based on their Aave V2 transaction data.
+## 📌 Overview
 
-## 📊 Score Distribution
+This analysis summarizes the scoring of user wallets based on their DeFi transaction data. The pipeline included:
 
-Below is the distribution of wallet scores grouped into 100-point buckets.
+1. **Data Loading** – Reading transaction records from the JSON dataset.
+2. **Feature Engineering** – Generating meaningful aggregated features per wallet.
+3. **Scoring** – Scaling features and calculating a composite wallet score.
 
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
+---
 
-df = pd.read_csv('wallet_scores.csv')
+## 🔧 Feature Engineering
 
-# Bin scores into ranges
-bins = list(range(0, 1100, 100))
-df['score_range'] = pd.cut(df['score'], bins)
+The following features were engineered for each wallet:
 
-# Plot
-score_counts = df['score_range'].value_counts().sort_index()
-score_counts.plot(kind='bar', figsize=(10,6))
-plt.title('Wallet Credit Score Distribution')
-plt.xlabel('Score Range')
-plt.ylabel('Number of Wallets')
-plt.show()
+| Feature Name          | Description |
+|------------------------|-------------|
+| `total_deposits_usd`  | Total deposit amount in USD. |
+| `total_redeems_usd`   | Total redeemed amount in USD. |
+| `txn_count`           | Total transaction count. |
+| `unique_assets`       | Number of unique assets interacted with. |
+| `max_deposit_usd`     | Maximum deposit amount in USD. |
+| `has_liquidation`     | Whether the wallet had any liquidation events (1 or 0). |
+| `avg_deposit_usd`     | Average deposit amount in USD. |
+
+---
+
+## 📈 Scoring Methodology
+
+- **Scaler Used**: `MinMaxScaler` with feature range (0, 1000).
+- **Score Calculation**: Mean of scaled features multiplied by 1000, rounded to integer.
+
+---
+
+## 🗃️ Final Score Summary
+
+| Statistic | Value |
+|-----------|-------|
+| **Count** | 3497 wallets |
+| **Mean** | ~60.31 |
+| **Std** | ~84.61 |
+| **Min** | 0 |
+| **25%** | 0 |
+| **50% (Median)** | 40 |
+| **75%** | 81 |
+| **Max** | 1000 |
+
+- The top scoring wallet achieved **1000**, indicating dominant DeFi activity relative to peers.
+
+---
+
+## ✅ Output
+
+Final wallet scores are saved to: wallet_scores.csv
