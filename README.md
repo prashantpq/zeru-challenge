@@ -2,16 +2,16 @@
 
 This project develops a robust machine learning pipeline to assign credit scores (0-1000) to wallets interacting with Aave V2 based on their historical transaction behavior.
 
-## 📊 Problem
+## Problem
 
 Assess DeFi user risk profiles from transaction-level data to enable credit risk assessment for decentralized lending protocols.
 
-## 💡 Approach
+## Approach
 
 1. **Feature Engineering:** Aggregated user transaction features such as total deposits, redeems, transaction count, unique assets, etc.
 2. **Scoring Model:** Normalization-based scoring across engineered features to yield a final wallet score (0-1000).
 
-## ⚙️ Project Structure
+## Project Structure
 
 - `score_wallets.py`: Main entry script to generate scores.
 - `src/feature_engineering.py`: Feature engineering logic.
@@ -19,7 +19,7 @@ Assess DeFi user risk profiles from transaction-level data to enable credit risk
 - `data/`: Sample input data.
 - `notebooks/`: Exploratory Data Analysis.
 
-## 🛠️ Requirements
+## Requirements
 
 - Python 3.8+
 - pandas
